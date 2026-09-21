@@ -112,47 +112,31 @@ function updateCartUI() {
     totalPriceElement.innerText = `${totalPrice} ₽`;
 }
 
-// 4. ФУНКЦИОНАЛ ОТПРАВКИ В TELEGRAM ЧЕРЕЗ БОТА
-orderForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+// 4. НАДЕЖНАЯ ОТПРАВКА В TELEGRAM (БЕЗ СКРЫТЫХ ЗАПРОСОВ)
+orderForm.addEventListener('submit', function(e) {
+    // Мы НЕ отменяем действие по умолчанию, позволяя форме отправиться через HTML
     const name = document.getElementById('userName').value;
     const phone = document.getElementById('userPhone').value;
 
-    // Формируем красивый текст сообщения
-    let message = `🔔 <b>Новый заказ с сайта!</b>\n\n`;
-    message += `👤 <b>Имя:</b> ${name}\n`;
-    message += `📞 <b>Телефон:</b> ${phone}\n\n`;
-    message += `📦 <b>Товары:</b>\n`;
-    
+    // Собираем текст сообщения
+    let message = `🔔 Новый заказ с сайта!\n\nИмя: ${name}\nТелефон: ${phone}\n\nТовары:\n`;
     cart.forEach(item => {
         message += `• ${item.name} (x${item.quantity}) — ${item.price * item.quantity} ₽\n`;
     });
-    
-    message += `\n💰 <b>Итого:</b> ${totalPriceElement.innerText}`;
+    message += `\nИтого: ${totalPriceElement.innerText}`;
 
-    // Отправка запроса в Telegram API
-    try {
-        const response = await fetch(`https://telegram.org{TELEGRAM_BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                chat_id: TELEGRAM_CHAT_ID,
-                text: message,
-                parse_mode: 'HTML'
-            })
-        });
-
-        if (response.ok) {
-            alert(`Спасибо за заказ, ${name}! Мы уже получили вашу заявку и свяжемся с вами в ближайшее время.`);
-            cart = [];
-            updateCartUI();
-            orderForm.reset();
-            closeCart();
-        } else {
-            alert('Произошла ошибка при отправке. Проверьте настройки токена бота.');
-        }
-    } catch (error) {
-        console.error('Ошибка:', error);
-        alert('Не удалось связаться с сервером Telegram. Проверьте интернет-соединение.');
+    // Создаем скрытое поле внутри формы, чтобы передать текст в Telegram
+    let hiddenText = document.getElementById('tgHiddenText');
+    if (!hiddenText) {
+        hiddenText = document.createElement('input');
+        hiddenText.type = 'hidden';
+        hiddenText.name = 'text';
+        hiddenText.id = 'tgHiddenText';
+        orderForm.appendChild(hiddenText);
     }
+    hiddenText.value = message;
+    
+    // Очищаем корзину перед уходом со страницы
+    cart = [];
+    updateCartUI();
 });
