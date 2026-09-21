@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Store Самара — Магазин оригинального качества</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cloudflare.com">
+</head>
+<body>
+
+    <!-- Навигация -->
+    <header>
+        <div class="logo">Premium<span>.</span></div>
+        <nav>
+            <a href="#catalog">Каталог</a>
+            <a href="#benefits">Почему мы</a>
+            <a href="#faq">Вопросы</a>
+        </nav>
+        <div class="header-controls">
+            <div class="cart-icon" id="cartBtn">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="geo-badge"><i class="fas fa-map-marker-alt"></i> Самара — Самовывоз сегодня</div>
+            <h1>Техника, которую<br>хочется включить.</h1>
+            <p>Наушники и аксессуары максимального премиум-качества. Проверка перед покупкой, честная гарантия 14 дней и подарок к каждому заказу.</p>
+            <a href="#catalog" class="btn">Перейти к покупкам</a>
+        </div>
+    </section>
+
+    <!-- Фильтры и Каталог -->
+    <section id="catalog" class="catalog">
+        <div class="section-title">
+            <h2>Каталог товаров</h2>
+            <p>Лучшие реплики на чипах Airoha с чистым звуком и рабочим шумоподавлением</p>
+        </div>
+
+        <!-- Кнопки фильтрации (Категории) -->
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Все товары</button>
+            <button class="filter-btn" data-filter="pods">Вкладыши</button>
+            <button class="filter-btn" data-filter="pro">Вакуумные</button>
+            <button class="filter-btn" data-filter="max">Полноразмерные</button>
+            <button class="filter-btn" data-filter="acc">Аксессуары</button>
+        </div>
+        
+        <div class="products-grid">
+            <!-- Товар 1 -->
+            <div class="product-card" data-id="1" data-category="pro" data-name="AirPods Pro 2 Premium" data-price="2200">
+                <span class="card-badge hit">Хит</span>
+                <div class="product-img">🎧</div>
+                <h3>AirPods Pro 2 Premium</h3>
+                <p class="desc">Полное шумоподавление 100%, глубокий бас, динамик на кейсе, регулировка громкости сенсором.</p>
+                <div class="price-row">
+                    <span class="price">2 200 ₽</span>
+                    <button class="add-to-cart">В корзину</button>
+                </div>
+            </div>
+
+            <!-- Товар 2 -->
+            <div class="product-card" data-id="2" data-category="pods" data-name="AirPods 4 Premium" data-price="2300">
+                <span class="card-badge new">Новинка</span>
+                <div class="product-img">🎵</div>
+                <h3>AirPods 4 Premium</h3>
+                <p class="desc">Свежий дизайн, улучшенная посадка, идеальные микрофоны для звонков, анимация iOS 18+.</p>
+                <div class="price-row">
+                    <span class="price">2 300 ₽</span>
+                    <button class="add-to-cart">В корзину</button>
+                </div>
+            </div>
+
+            <!-- Товар 3 -->
+            <div class="product-card" data-id="3" data-category="pods" data-name="AirPods 3 (ANC)" data-price="2100">
+                <div class="product-img">⚡</div>
+                <h3>AirPods 3 (с ANC)</h3>
+                <p class="desc">Классические вкладыши с поддержкой пространственного аудио и редкой функцией шумоподавления.</p>
+                <div class="price-row">
+                    <span class="price">2 100 ₽</span>
+                    <button class="add-to-cart">В корзину</button>
+                </div>
+            </div>
+
+            <!-- Товар 4 -->
+            <div class="product-card" data-id="4" data-category="pro" data-name="AirPods Pro 3 Макс" data-price="3200">
+                <span class="card-badge">Люкс</span>
+                <div class="product-img">🌟</div>
+                <h3>AirPods Pro 3 (Максимальные)</h3>
+                <p class="desc">Кастомизированная люкс-версия. Оригинальные гироскопы, чистейшие высокие частоты и усиленный аккумулятор.</p>
+                <div class="price-row">
+                    <span class="price">3 200 ₽</span>
+                    <button class="add-to-cart">В корзину</button>
+                </div>
+            </div>
+
+            <!-- Товар 5 -->
+            <div class="product-card" data-id="5" data-category="max" data-name="AirPods Max 2" data-price="7500">
+                <div class="product-img">🎧🤖</div>
+                <h3>AirPods Max 2 Полноразмерные</h3>
+                <p class="desc">Алюминиевые чашки, тяжелый люксовый вес, сеточка из дышащей ткани. Полное погружение в музыку.</p>
+                <div class="price-row">
+                    <span class="price">7 500 ₽</span>
+                    <button class="add-to-cart">В корзину</button>
+                </div>
+            </div>
+
+            <!-- Товар 6 (Доп. позиция для маржи) -->
+            <div class="product-card" data-id="6" data-category="acc" data-name="Силиконовый чехол Premium" data-price="250">
+                <div class="product-img">🛡️</div>
+                <h3>Силиконовый чехол (Soft-touch)</h3>
+                <p class="desc">Плотный силикон, защита от царапин, карабин в комплекте. Идеально сидит на кейсе.</p>
+                <div class="price-row">
+                    <span class="price">250 ₽</span>
+                    <button class="add-to-cart">В корзину</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок преимуществ -->
+    <section id="benefits" class="benefits">
+        <div class="benefit-item">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Гарантия 14 дней</h3>
+            <p>Обнаружили брак? Без лишних вопросов заменим наушники на новые.</p>
+        </div>
+        <div class="benefit-item">
+            <i class="fas fa-eye"></i>
+            <h3>Проверка перед покупкой</h3>
+            <p>Вы можете вскрыть коробку, подключить к телефону и послушать звук до оплаты.</p>
+        </div>
+        <div class="benefit-item">
+            <i class="fas fa-user-check"></i>
+            <h3>Честный самовывоз</h3>
+            <p>Встреча в центре Самары в удобное время. Без предоплат.</p>
+        </div>
+    </section>
+
+    <!-- FAQ (Вопросы и ответы) -->
+    <section id="faq" class="faq">
+        <div class="section-title">
+            <h2>Часто задаваемые вопросы</h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">Это копия или оригинал? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Это премиальная реплика 1:1. Используются дорогие чипы Airoha, поэтому звук, коробка, серийные номера в настройках и анимация полностью идентичны оригиналу.</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">Как забрать товар в Самаре? <i class="fas fa-chevron-down"></i></div>
+                <div class="faq-answer">Мы работаем по системе самовывоза. После оформления заказа мы свяжемся с вами и согласуем удобную точку встречи в черте города.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Ваш заказ</h2>
+            <div id="cartItemsList">
+                <p class="empty-text">В корзине пока ничего нет</p>
+            </div>
+            <div class="cart-total">
+                <span>Итого к оплате:</span>
+                <span id="totalPrice">0 ₽</span>
+            </div>
+            <form id="orderForm">
+                <input type="text" id="userName" placeholder="Ваше имя" required>
+                <input type="tel" id="userPhone" placeholder="Номер телефона (Telegram/WhatsApp)" required>
+                <button type="submit" class="btn order-btn">Оформить заказ</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
