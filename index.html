@@ -171,7 +171,8 @@
                 <span>Итого к оплате:</span>
                 <span id="totalPrice">0 ₽</span>
             </div>
-            <form id="orderForm">
+           <form id="orderForm" action="https://telegram.org" method="POST">
+    <input type="hidden" name="chat_id" value="1344498721">
                 <input type="text" id="userName" placeholder="Ваше имя" required>
                 <input type="tel" id="userPhone" placeholder="Номер телефона (Telegram/WhatsApp)" required>
                 <button type="submit" class="btn order-btn">Оформить заказ</button>
