@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <!-- Навигация -->
+    <!-- Навигация (Эффект размытого стекла) -->
     <header>
         <div class="logo">Premium<span>.</span></div>
         <nav>
@@ -30,7 +30,7 @@
         <div class="hero-content">
             <div class="geo-badge"><i class="fas fa-map-marker-alt"></i> Самара — Самовывоз сегодня</div>
             <h1>Техника, которую<br>хочется включить.</h1>
-            <p>Наушники и аксессуары максимального премиум-качества. Проверка перед покупкой, честная гарантия 14 дней и подарок к каждому заказу.</p>
+            <p>Наушники и аксессуары максимального премиум-качества. Проверка перед покупкой, честная гарантия 14 дней и подарки к каждому заказу.</p>
             <a href="#catalog" class="btn">Перейти к покупкам</a>
         </div>
     </section>
@@ -42,7 +42,7 @@
             <p>Лучшие реплики на чипах Airoha с чистым звуком и рабочим шумоподавлением</p>
         </div>
 
-        <!-- Кнопки фильтрации (Категории) -->
+        <!-- Кнопки фильтрации -->
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">Все товары</button>
             <button class="filter-btn" data-filter="pods">Вкладыши</button>
@@ -69,7 +69,7 @@
                 <span class="card-badge new">Новинка</span>
                 <div class="product-img">🎵</div>
                 <h3>AirPods 4 Premium</h3>
-                <p class="desc">Свежий дизайн, улучшенная посадка, идеальные микрофоны для звонков, анимация iOS 18+.</p>
+                <p class="desc">Свежий дизайн, улучшенная посадка, идеальные микрофоны для звонков, анимация iOS 18/19.</p>
                 <div class="price-row">
                     <span class="price">2 300 ₽</span>
                     <button class="add-to-cart">В корзину</button>
@@ -110,7 +110,7 @@
                 </div>
             </div>
 
-            <!-- Товар 6 (Доп. позиция для маржи) -->
+            <!-- Товар 6 -->
             <div class="product-card" data-id="6" data-category="acc" data-name="Силиконовый чехол Premium" data-price="250">
                 <div class="product-img">🛡️</div>
                 <h3>Силиконовый чехол (Soft-touch)</h3>
@@ -123,7 +123,7 @@
         </div>
     </section>
 
-    <!-- Блок преимуществ -->
+    <!-- Преимущества -->
     <section id="benefits" class="benefits">
         <div class="benefit-item">
             <i class="fas fa-shield-alt"></i>
@@ -138,11 +138,11 @@
         <div class="benefit-item">
             <i class="fas fa-user-check"></i>
             <h3>Честный самовывоз</h3>
-            <p>Встреча в центре Самары в удобное время. Без предоплат.</p>
+            <p>Встреча в центре Самары в удобное время. Без каких-либо предоплат.</p>
         </div>
     </section>
 
-    <!-- FAQ (Вопросы и ответы) -->
+    <!-- FAQ -->
     <section id="faq" class="faq">
         <div class="section-title">
             <h2>Часто задаваемые вопросы</h2>
@@ -159,7 +159,7 @@
         </div>
     </section>
 
-    <!-- Модальное окно -->
+    <!-- Корзина -->
     <div class="modal" id="cartModal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -171,8 +171,7 @@
                 <span>Итого к оплате:</span>
                 <span id="totalPrice">0 ₽</span>
             </div>
-           <form id="orderForm" action="https://telegram.org" method="POST">
-    <input type="hidden" name="chat_id" value="1344498721">
+            <form id="orderForm">
                 <input type="text" id="userName" placeholder="Ваше имя" required>
                 <input type="tel" id="userPhone" placeholder="Номер телефона (Telegram/WhatsApp)" required>
                 <button type="submit" class="btn order-btn">Оформить заказ</button>
