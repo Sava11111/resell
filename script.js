@@ -1,10 +1,7 @@
-// НАСТРОЙКА TELEGRAM БОТА (ВСТАВЬ СВОИ ДАННЫЕ ВНУТРИ КАВЫЧЕК)
-const TELEGRAM_BOT_TOKEN = '8609189640:AAGRBaOHTqVUNETHHwdpZ8AfK8SenkUjpl4'; 
-const TELEGRAM_CHAT_ID = '1344498721';
+const TELEGRAM_USERNAME = 'ТВОЙ_ЛОГИН_В_ТЕЛЕГРАМ';
 
 let cart = [];
 
-// DOM Элементы
 const cartBtn = document.getElementById('cartBtn');
 const cartModal = document.getElementById('cartModal');
 const closeModal = document.querySelector('.close-modal');
@@ -108,35 +105,32 @@ function updateCartUI() {
     totalPriceElement.innerText = `${totalPrice} ₽`;
 }
 
-// 4.БЕЗОШИБОЧНАЯ ОТПРАВКА ЗАКАЗА В TELEGRAM
+// 4. НАДЕЖНАЯ ОТПРАВКА БЕЗ БЛОКИРОВОК И ОШИБОК
 orderForm.addEventListener('submit', function(e) {
     e.preventDefault();
 
     const name = document.getElementById('userName').value;
     const phone = document.getElementById('userPhone').value;
 
-    let message = `🔔 <b>Новый заказ с сайта!</b>\n\n`;
-    message += `👤 <b>Имя:</b> ${name}\n`;
-    message += `📞 <b>Телефон:</b> ${phone}\n\n`;
-    message += `📦 <b>Товары:</b>\n`;
+    // Генерируем красивый текст сообщения
+    let message = `🔔 Новый заказ с сайта!\n\n`;
+    message += `👤 Имя: ${name}\n`;
+    message += `📞 Телефон: ${phone}\n\n`;
+    message += `📦 Товары:\n`;
     
     cart.forEach(item => {
         message += `• ${item.name} (x${item.quantity}) — ${item.price * item.quantity} ₽\n`;
     });
     
-    message += `\n💰 <b>Итого:</b> ${totalPriceElement.innerText}`;
+    message += `\n💰 Итого: ${totalPriceElement.innerText}`;
 
     const encodedMessage = encodeURIComponent(message);
+    const tgUrl = `https://t.me{TELEGRAM_USERNAME}?text=${encodedMessage}`;
 
-    // Метод обхода CORS-блокировок с помощью создания виртуального системного изображения
-    const tgUrl = `https://telegram.org{TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}&parse_mode=HTML`;
-    const pingImg = new Image();
-    pingImg.src = tgUrl;
-
-    // Закрываем корзину
+    // Сворачиваем модальное окно
     closeCart();
 
-    // Создаем красивую плашку всплывающего уведомления
+    // Показываем зеленую всплывающую плашку сверху экрана
     const notification = document.createElement('div');
     notification.innerHTML = `
         <div style="
@@ -147,26 +141,29 @@ orderForm.addEventListener('submit', function(e) {
             z-index: 9999; display: flex; align-items: center; gap: 10px;
             transition: top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         ">
-            <i class="fas fa-check-circle"></i> Заказ успешно оформлен! Мы свяжемся с вами.
+            <i class="fas fa-check-circle"></i> Заказ сформирован! Перенаправляем в Telegram...
         </div>
     `;
     
     const notificationNode = notification.firstElementChild;
     document.body.appendChild(notificationNode);
 
-    // Выплывание плашки сверху
+    // Плашка выплывает сверху
     setTimeout(() => { notificationNode.style.top = '30px'; }, 100);
 
-    // Улетание плашки через 4 секунды
+    // Через 1.5 секунды открываем Telegram с готовым сообщением
+    setTimeout(() => {
+        window.open(tgUrl, '_blank');
+    }, 1500);
+
+    // Через 4 секунды плашка улетает назад
     setTimeout(() => {
         notificationNode.style.top = '-100px';
         setTimeout(() => notificationNode.remove(), 500);
     }, 4000);
 
-    // Сброс данных магазина
+    // Сброс корзины
     cart = [];
     updateCartUI();
     orderForm.reset();
-});
-    updateCartUI();
 });
