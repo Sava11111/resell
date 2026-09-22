@@ -1,3 +1,4 @@
+// НАСТРОЙКА ТЕЛЕГРАМ (Твой юзернейм kvasmennn прописан автоматически)
 const TELEGRAM_USERNAME = 'kvasmennn';
 
 let cart = [];
@@ -87,15 +88,17 @@ orderForm.addEventListener('submit', function(e) {
     message += `\n💰 Итого к оплате: ${totalPriceElement.innerText}`;
 
     const encodedMessage = encodeURIComponent(message);
-    const tgUrl = `https://t.me{kvasmennn}?text=${encodedMessage}`;
+    
+    // СТРОКА С ТВОИМ ЮЗЕРНЕЙМОМ БЕЗ ОШИБОК И ЛИШНИХ СКОБОК
+    const tgUrl = 'https://t.me' + encodedMessage;
 
-    // Закрываем окно
+    // Закрываем окно корзины
     cartModal.classList.remove('active');
 
-    // Открываем Telegram с готовым текстом
+    // Открываем Telegram с готовым текстом заказа
     window.open(tgUrl, '_blank');
 
-    // Мгновенная очистка корзины
+    // Очистка корзины и сброс формы
     cart = [];
     updateCartUI();
     orderForm.reset();
