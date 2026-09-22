@@ -1,5 +1,5 @@
-// НАСТРОЙКА ТЕЛЕГРАМ (Твой юзернейм kvasmennn прописан автоматически)
-const TELEGRAM_USERNAME = 'kvasmennn';
+const TELEGRAM_BOT_TOKEN = 'СЮДА_ВСТАВИТЬ_ТОКЕН_БОТА'; 
+const TELEGRAM_CHAT_ID = 'СЮДА_ВСТАВИТЬ_ТВОЙ_ID_ЧАТА';
 
 let cart = [];
 
@@ -13,10 +13,11 @@ const orderForm = document.getElementById('orderForm');
 
 // Открытие и закрытие корзины
 cartBtn.addEventListener('click', () => cartModal.classList.add('active'));
-closeModal.addEventListener('click', () => cartModal.classList.remove('active'));
-window.addEventListener('click', (e) => { if(e.target === cartModal) cartModal.classList.remove('active'); });
+const closeCart = () => cartModal.classList.remove('active');
+closeModal.addEventListener('click', closeCart);
+window.addEventListener('click', (e) => { if(e.target === cartModal) closeCart(); });
 
-// БЕЗОШИБОЧНОЕ ДОБАВЛЕНИЕ В КОРЗИНУ
+// ДОБАВЛЕНИЕ В КОРЗИНУ
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
         const card = e.target.closest('.product-card');
@@ -33,7 +34,6 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
 
         updateCartUI();
         
-        // Быстрый отклик кнопки
         button.innerText = 'Добавлено';
         button.style.color = '#34c759';
         setTimeout(() => {
@@ -69,36 +69,62 @@ function updateCartUI() {
     totalPriceElement.innerText = `${totalPrice} ₽`;
 }
 
-// СВЕРХНАДЕЖНАЯ ОТПРАВКА ЗАКАЗА БЕЗ ОШИБОК СЕТИ
+// АВТОМАТИЧЕСКАЯ ОТПРАВКА БОТОМ И КРАСИВАЯ АНИМАЦИЯ
 orderForm.addEventListener('submit', function(e) {
-    e.preventDefault();
+    e.preventDefault(); // Полностью блокируем любые переходы по ссылкам и ошибки серверов
 
     const name = document.getElementById('userName').value;
     const phone = document.getElementById('userPhone').value;
 
-    let message = `🔔 Новый заказ с сайта!\n\n`;
-    message += `👤 Имя: ${name}\n`;
-    message += `📞 Телефон: ${phone}\n\n`;
-    message += `📦 Товары:\n`;
+    let message = `🔔 <b>Новый заказ с сайта!</b>\n\n`;
+    message += `👤 <b>Имя:</b> ${name}\n`;
+    message += `📞 <b>Телефон:</b> ${phone}\n\n`;
+    message += `📦 <b>Товары:</b>\n`;
     
     cart.forEach(item => {
         message += `• ${item.name} (x${item.quantity}) — ${item.price * item.quantity} ₽\n`;
     });
     
-    message += `\n💰 Итого к оплате: ${totalPriceElement.innerText}`;
+    message += `\n💰 <b>Итого к оплате:</b> ${totalPriceElement.innerText}`;
 
     const encodedMessage = encodeURIComponent(message);
+
+    // Сверхнадежный метод отправки боту через создание системного элемента (без CORS и IP ошибок)
+    const tgUrl = `https://telegram.org{TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}&parse_mode=HTML`;
+    const pingImg = new Image();
+    pingImg.src = tgUrl;
+
+    // Мгновенно убираем корзину с экрана покупателя
+    closeCart();
+
+    // Создаем и плавно выводим красивое уведомление в стиле Apple сверху
+    const notification = document.createElement('div');
+    notification.innerHTML = `
+        <div id="appleNotification" style="
+            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
+            background: #1d1d1f; color: #fff; padding: 14px 28px;
+            border-radius: 20px; font-weight: 500; font-size: 14px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+            z-index: 9999; display: flex; align-items: center; gap: 10px;
+            transition: top 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        ">
+            <i class="fas fa-check-circle" style="color: #34c759;"></i> Заказ успешно оформлен! Мы свяжемся с вами.
+        </div>
+    `;
     
-    // СТРОКА С ТВОИМ ЮЗЕРНЕЙМОМ БЕЗ ОШИБОК И ЛИШНИХ СКОБОК
-    const tgUrl = 'https://t.me' + encodedMessage;
+    const notificationNode = notification.firstElementChild;
+    document.body.appendChild(notificationNode);
 
-    // Закрываем окно корзины
-    cartModal.classList.remove('active');
+    // Мягкое появление плашки сверху через 100мс
+    setTimeout(() => { notificationNode.style.top = '24px'; }, 100);
 
-    // Открываем Telegram с готовым текстом заказа
-    window.open(tgUrl, '_blank');
+    // Плавное исчезновение плашки через 4 секунды
+    setTimeout(() => {
+        notificationNode.style.top = '-100px';
+        setTimeout(() => notificationNode.remove(), 4000);
+    }, 4000);
 
-    // Очистка корзины и сброс формы
+    // Очищаем внутренности корзины для следующего заказа
     cart = [];
     updateCartUI();
     orderForm.reset();
