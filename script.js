@@ -1,4 +1,4 @@
-const TELEGRAM_USERNAME = 'ТВОЙ_ЛОГИН_В_ТЕЛЕГРАМ';
+const TELEGRAM_USERNAME = 'kvasmennn';
 
 let cart = [];
 
