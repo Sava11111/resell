@@ -87,7 +87,7 @@ orderForm.addEventListener('submit', function(e) {
     message += `\n💰 Итого к оплате: ${totalPriceElement.innerText}`;
 
     const encodedMessage = encodeURIComponent(message);
-    const tgUrl = `https://t.me{TELEGRAM_USERNAME}?text=${encodedMessage}`;
+    const tgUrl = `https://t.me{kvasmennn}?text=${encodedMessage}`;
 
     // Закрываем окно
     cartModal.classList.remove('active');
