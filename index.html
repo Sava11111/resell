@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Store — Наушники и гаджеты оригинального качества</title>
+    <title>Premium Store — Наушники оригинального качества</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Подключение премиальных иконок -->
     <link rel="stylesheet" href="https://cloudflare.com">
 </head>
 <body>
@@ -12,13 +13,13 @@
     <!-- Шапка сайта -->
     <header>
         <div class="header-container">
-            <div class="logo">Premium Store</div>
+            <div class="logo">Premium Store<span>.</span></div>
             <nav>
                 <a href="#catalog">Каталог</a>
                 <a href="#benefits">О нас</a>
             </nav>
             <div class="cart-icon" id="cartBtn">
-                <i class="fas fa-shopping-bag"></i>
+                <i class="fa-solid fa-bag-shopping"></i>
                 <span id="cartCount">0</span>
             </div>
         </div>
@@ -27,7 +28,7 @@
     <!-- Главный баннер -->
     <section class="hero">
         <div class="hero-content">
-            <div class="location-badge"><i class="fas fa-map-marker-alt"></i> Самара • Самовывоз сегодня</div>
+            <div class="location-badge"><i class="fa-solid fa-location-dot"></i> Самара • Самовывоз сегодня</div>
             <h1>Звук, который меняет всё.</h1>
             <p>Наушники премиального фабричного качества. Честное шумоподавление, глубокий бас, тест перед покупкой и гарантия 14 дней.</p>
             <a href="#catalog" class="btn-apple">Купить</a>
@@ -40,8 +41,9 @@
             <h2 class="section-title">Выберите свои AirPods</h2>
             
             <div class="products-grid">
+                <!-- Товар 1 -->
                 <div class="product-card" data-id="1" data-name="AirPods Pro 2 Premium" data-price="2200">
-                    <div class="card-image">🎧</div>
+                    <div class="card-icon-box"><i class="fa-solid fa-ear-buds"></i></div>
                     <h3>AirPods Pro 2 Premium</h3>
                     <p class="card-desc">Активное шумоподавление 100%, управление громкостью сенсором, оригинальный микрофон.</p>
                     <div class="card-footer">
@@ -50,8 +52,9 @@
                     </div>
                 </div>
 
+                <!-- Товар 2 -->
                 <div class="product-card" data-id="2" data-name="AirPods 4 Premium" data-price="2300">
-                    <div class="card-image">🎵</div>
+                    <div class="card-icon-box"><i class="fa-solid fa-music"></i></div>
                     <h3>AirPods 4 Premium</h3>
                     <p class="card-desc">Новейший дизайн, адаптивный эквалайзер, идеальная посадка и чистый звук.</p>
                     <div class="card-footer">
@@ -60,8 +63,9 @@
                     </div>
                 </div>
 
+                <!-- Товар 3 -->
                 <div class="product-card" data-id="3" data-name="AirPods 3 (ANC)" data-price="2100">
-                    <div class="card-image">⚡</div>
+                    <div class="card-icon-box"><i class="fa-solid fa-bolt"></i></div>
                     <h3>AirPods 3 Premium</h3>
                     <p class="card-desc">Классические вкладыши с поддержкой пространственного аудио и функцией ANC.</p>
                     <div class="card-footer">
@@ -70,8 +74,9 @@
                     </div>
                 </div>
 
+                <!-- Товар 4 -->
                 <div class="product-card" data-id="4" data-name="AirPods Max 2" data-price="7500">
-                    <div class="card-image">🎧🤖</div>
+                    <div class="card-icon-box"><i class="fa-solid fa-headphones"></i></div>
                     <h3>AirPods Max 2</h3>
                     <p class="card-desc">Люксовые полноразмерные наушники. Металлические чашки и максимальный комфорт.</p>
                     <div class="card-footer">
@@ -86,18 +91,18 @@
     <!-- Преимущества -->
     <section id="benefits" class="benefits">
         <div class="benefit-item">
-            <i class="fas fa-shield-alt"></i>
+            <i class="fa-solid fa-shield-halved"></i>
             <h3>Гарантия качества</h3>
             <p>14 дней на обмен в случае выявления фабричного брака.</p>
         </div>
         <div class="benefit-item">
-            <i class="fas fa-eye"></i>
+            <i class="fa-solid fa-eye"></i>
             <h3>Полная проверка</h3>
             <p>Вскрываем коробку и тестируем звук на вашем телефоне до оплаты.</p>
         </div>
     </section>
 
-    <!-- Окно корзины (Сверхнадежная отправка формы напрямую на сервера Telegram) -->
+    <!-- Окно корзины (СВЕРХНАДЕЖНАЯ ПРЯМАЯ ОТПРАВКА НА СЕРВЕРА TELEGRAM) -->
     <div class="modal" id="cartModal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
@@ -110,7 +115,7 @@
                 <span id="totalPrice">0 ₽</span>
             </div>
             
-            <!-- Прямой POST запрос к API Телеграма, который не заблокирует ни один браузер -->
+            <!-- Прямой шлюз формы. Код и ID зашиты намертво -->
             <form id="orderForm" action="https://telegram.org" method="POST">
                 <input type="hidden" name="chat_id" value="1344498721">
                 <input type="hidden" name="parse_mode" value="HTML">
