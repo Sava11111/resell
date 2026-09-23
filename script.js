@@ -2,8 +2,8 @@
 // НАСТРОЙКА TELEGRAM БОТА 
 // Вставь свои данные строго внутри одинарных кавычек ''
 // ==========================================
-const TELEGRAM_BOT_TOKEN = 'СЮДА_ВСТАВИТЬ_ТОКЕН_БОТА'; 
-const TELEGRAM_CHAT_ID = 'СЮДА_ВСТАВИТЬ_ТВОЙ_ID_ЧАТА';
+const TELEGRAM_BOT_TOKEN = '8609189640:AAGRBaOHTqVUNETHHwdpZ8AfK8SenkUjpl4'; 
+const TELEGRAM_CHAT_ID = '1344498721';
 
 // Переменная для хранения товаров в корзине
 let cart = [];
