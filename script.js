@@ -14,7 +14,7 @@ cartBtn.addEventListener('click', () => cartModal.classList.add('active'));
 closeModal.addEventListener('click', () => cartModal.classList.remove('active'));
 window.addEventListener('click', (e) => { if(e.target === cartModal) cartModal.classList.remove('active'); });
 
-// Стабильное добавление в корзину
+// Добавление наушников в корзину
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
         const card = e.target.closest('.product-card');
@@ -66,7 +66,7 @@ function updateCartUI() {
     totalPriceElement.innerText = `${totalPrice} ₽`;
 }
 
-// Перехват отправки формы для генерации красивого текста
+// Формирование текста заказа перед физической отправкой формы
 orderForm.addEventListener('submit', function(e) {
     if (cart.length === 0) {
         e.preventDefault();
@@ -77,7 +77,6 @@ orderForm.addEventListener('submit', function(e) {
     const name = document.getElementById('userName').value;
     const phone = document.getElementById('userPhone').value;
 
-    // Генерируем чек
     let message = `🔔 <b>Новый заказ с сайта!</b>\n\n`;
     message += `👤 <b>Имя:</b> ${name}\n`;
     message += `📞 <b>Телефон:</b> ${phone}\n\n`;
@@ -89,10 +88,8 @@ orderForm.addEventListener('submit', function(e) {
     
     message += `\n💰 <b>Итого к оплате:</b> ${totalPriceElement.innerText}`;
 
-    // Передаем текст в скрытое поле формы перед отправкой
     tgMessageText.value = message;
 
-    // Очищаем корзину локально, пока форма летит на сервер Telegram
     setTimeout(() => {
         cartModal.classList.remove('active');
         cart = [];
