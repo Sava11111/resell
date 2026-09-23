@@ -1,14 +1,8 @@
-// ==========================================
-// НАСТРОЙКА TELEGRAM БОТА 
-// Вставь свои данные строго внутри одинарных кавычек ''
-// ==========================================
-const TELEGRAM_BOT_TOKEN = '8609189640:AAGRBaOHTqVUNETHHwdpZ8AfK8SenkUjpl4'; 
-const TELEGRAM_CHAT_ID = '1344498721';
+const TELEGRAM_BOT_TOKEN = 'СЮДА_ВСТАВИТЬ_ТОКЕН_БОТА'; 
+const TELEGRAM_CHAT_ID = 'СЮДА_ВСТАВИТЬ_ТВОЙ_ID_ЧАТА';
 
-// Переменная для хранения товаров в корзине
 let cart = [];
 
-// DOM Элементы интерфейса
 const cartBtn = document.getElementById('cartBtn');
 const cartModal = document.getElementById('cartModal');
 const closeModal = document.querySelector('.close-modal');
@@ -17,15 +11,13 @@ const cartItemsList = document.getElementById('cartItemsList');
 const totalPriceElement = document.getElementById('totalPrice');
 const orderForm = document.getElementById('orderForm');
 
-// Функция закрытия корзины
+// Открытие и закрытие корзины
 const closeCart = () => cartModal.classList.remove('active');
-
-// Слушатели событий для открытия и закрытия окна корзины
 cartBtn.addEventListener('click', () => cartModal.classList.add('active'));
 closeModal.addEventListener('click', closeCart);
 window.addEventListener('click', (e) => { if(e.target === cartModal) closeCart(); });
 
-// ЛОГИКА ДОБАВЛЕНИЯ НАУШНИКОВ В КОРЗИНУ
+// ДОБАВЛЕНИЕ НАУШНИКОВ В КОРЗИНУ
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
         const card = e.target.closest('.product-card');
@@ -40,10 +32,8 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
             cart.push({ id, name, price, quantity: 1 });
         }
 
-        // Обновляем внешний вид корзины
         updateCartUI();
         
-        // Визуальный отклик кнопки при успешном добавлении
         button.innerText = 'Добавлено';
         button.style.color = '#34c759';
         setTimeout(() => {
@@ -53,7 +43,6 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     });
 });
 
-// ФУНКЦИЯ ОБНОВЛЕНИЯ ИНТЕРФЕЙСА КОРЗИНЫ
 function updateCartUI() {
     const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
     cartCount.innerText = totalCount;
@@ -80,20 +69,18 @@ function updateCartUI() {
     totalPriceElement.innerText = `${totalPrice} ₽`;
 }
 
-// ОФИЦИАЛЬНАЯ ОТПРАВКА ЗАКАЗА БОТОМ С КОНТРОЛЕМ ОШИБОК
+// ОТПРАВКА ЗАКАЗА БОТОМ С КОНТРОЛЕМ ОШИБОК
 orderForm.addEventListener('submit', async function(e) {
-    e.preventDefault(); // Полностью блокируем перезагрузку страницы браузером
+    e.preventDefault(); 
 
-    // Защита от отправки пустой корзины
     if (cart.length === 0) {
-        alert('Ваша корзина пуста. Добавьте товары перед оформлением!');
+        alert('Ваша корзина пуста.');
         return;
     }
 
     const name = document.getElementById('userName').value;
     const phone = document.getElementById('userPhone').value;
 
-    // Генерируем структурированный текст чека для Telegram
     let message = `🔔 <b>Новый заказ с сайта!</b>\n\n`;
     message += `👤 <b>Имя:</b> ${name}\n`;
     message += `📞 <b>Телефон:</b> ${phone}\n\n`;
@@ -109,14 +96,12 @@ orderForm.addEventListener('submit', async function(e) {
     const tgUrl = `https://telegram.org{TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}&parse_mode=HTML`;
 
     try {
-        // Отправляем открытый защищенный запрос напрямую в Telegram API
         const response = await fetch(tgUrl);
         
         if (response.ok) {
-            // ШАГ 1. Закрываем корзину на экране покупателя
             closeCart();
 
-            // ШАГ 2. Создаем и выводим фирменную плашку Apple-стиля сверху экрана
+            // Создаем плашку сверху экрана
             const notification = document.createElement('div');
             notification.innerHTML = `
                 <div style="
@@ -134,26 +119,21 @@ orderForm.addEventListener('submit', async function(e) {
             const notificationNode = notification.firstElementChild;
             document.body.appendChild(notificationNode);
 
-            // Мягкое выплывание плашки сверху вниз
             setTimeout(() => { notificationNode.style.top = '24px'; }, 100);
 
-            // Мягкое улетание плашки наверх спустя 4 секунды
             setTimeout(() => {
                 notificationNode.style.top = '-100px';
                 setTimeout(() => notificationNode.remove(), 500);
             }, 4000);
 
-            // ШАГ 3. Полностью очищаем корзину и сбрасываем поля ввода формы
             cart = [];
             updateCartUI();
             orderForm.reset();
         } else {
-            // Если сервер Telegram вернул ошибку (например, статус 400 или 404)
-            alert('Telegram отклонил запрос. Проверьте правильность TOKEN бота и CHAT_ID в самом верху файла script.js! Также убедитесь, что вы запустили бота кнопкой Старт в Telegram.');
+            alert('Telegram отклонил запрос. Проверьте TOKEN бота и CHAT_ID в коде!');
         }
     } catch (error) {
-        // Если запрос заблокирован на уровне браузера/расширений или нет интернета
         console.error('Ошибка сети:', error);
-        alert('Не удалось связаться с сервером Telegram API. Проверьте интернет-соединение или настройки блокировщиков рекламы.');
+        alert('Браузер заблокировал прямой запрос к Telegram API. Запустите проверочный файл test.py через командную строку!');
     }
 });
