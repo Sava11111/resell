@@ -53,7 +53,6 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     });
 });
 
-// ИНТЕРАКТИВНОЕ ИЗМЕНЕНИЕ КОЛИЧЕСТВА И УДАЛЕНИЕ ИЗ КОРЗИНЫ
 function changeQuantity(id, delta) {
     const item = cart.find(item => item.id === id);
     if (item) {
@@ -65,6 +64,7 @@ function changeQuantity(id, delta) {
     updateCartUI();
 }
 
+// Кнопка быстрого удаления
 function removeItem(id) {
     cart = cart.filter(item => item.id !== id);
     updateCartUI();
@@ -89,7 +89,7 @@ function updateCartUI() {
         itemElement.innerHTML = `
             <div>
                 <strong>${item.name}</strong>
-                <br><span style="color:#6e6e73">${item.price * item.quantity} ₽</span>
+                <br><span style="color:#86868b">${item.price * item.quantity} ₽</span>
             </div>
             <div class="cart-item-controls">
                 <button class="btn-qty" onclick="changeQuantity('${item.id}', -1)">-</button>
@@ -104,11 +104,9 @@ function updateCartUI() {
     totalPriceElement.innerText = totalPrice + ' ₽';
 }
 
-// ПРОВЕРКА НА ПУСТОТУ И JSON-ОТПРАВКА НА PYTHON В ОДИН КЛИК
 orderForm.addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // ПЛАШКА ПРЕДУПРЕЖДЕНИЯ ЕСЛИ КОРЗИНА ПУСТА
     if (cart.length === 0) {
         alert('Ваша корзина пуста! Добавьте наушники перед оформлением заказа.');
         return;
@@ -140,7 +138,6 @@ orderForm.addEventListener('submit', async function(e) {
             closeCart();
             alert('Заказ успешно оформлен! Чек отправлен вам в Telegram.');
             
-            // Начисто сбрасываем корзину и поля от автозаполнения
             cart = [];
             updateCartUI();
             orderForm.reset();
