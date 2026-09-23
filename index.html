@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Store — Наушники оригинального качества</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Подключение векторных иконок FontAwesome -->
-    <link rel="stylesheet" href="https://cloudflare.com">
 </head>
 <body>
 
@@ -18,9 +16,9 @@
                 <a href="#catalog">Каталог</a>
                 <a href="#benefits">О нас</a>
             </nav>
+            <!-- Блок корзины -->
             <div class="cart-icon" id="cartBtn">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cartCount">0</span>
+                🛒 <span id="cartCount">0</span>
             </div>
         </div>
     </header>
@@ -28,7 +26,7 @@
     <!-- Главный баннер -->
     <section class="hero">
         <div class="hero-content">
-            <div class="location-badge"><i class="fa-solid fa-location-dot"></i> Самара • Самовывоз сегодня</div>
+            <div class="location-badge">📍 Самара • Самовывоз сегодня</div>
             <h1>Звук, который меняет всё.</h1>
             <p>Наушники премиального фабричного качества. Честное шумоподавление, глубокий бас, тест перед покупкой и гарантия 14 дней.</p>
             <a href="#catalog" class="btn-apple">Купить</a>
@@ -43,7 +41,7 @@
             <div class="products-grid">
                 <!-- Товар 1 -->
                 <div class="product-card" data-id="1" data-name="AirPods Pro 2 Premium" data-price="2200">
-                    <div class="card-icon-box"><i class="fa-solid fa-ear-buds"></i></div>
+                    <div class="card-icon-box" id="img-1">🎧Pro</div>
                     <h3>AirPods Pro 2 Premium</h3>
                     <p class="card-desc">Активное шумоподавление 100%, управление громкостью сенсором, оригинальный микрофон.</p>
                     <div class="card-footer">
@@ -54,7 +52,7 @@
 
                 <!-- Товар 2 -->
                 <div class="product-card" data-id="2" data-name="AirPods 4 Premium" data-price="2300">
-                    <div class="card-icon-box"><i class="fa-solid fa-music"></i></div>
+                    <div class="card-icon-box" id="img-2">🎧4</div>
                     <h3>AirPods 4 Premium</h3>
                     <p class="card-desc">Новейший дизайн, адаптивный эквалайзер, идеальная посадка и чистый звук.</p>
                     <div class="card-footer">
@@ -65,7 +63,7 @@
 
                 <!-- Товар 3 -->
                 <div class="product-card" data-id="3" data-name="AirPods 3 (ANC)" data-price="2100">
-                    <div class="card-icon-box"><i class="fa-solid fa-bolt"></i></div>
+                    <div class="card-icon-box" id="img-3">🎧3</div>
                     <h3>AirPods 3 Premium</h3>
                     <p class="card-desc">Классические вкладыши с поддержкой пространственного аудио и функцией ANC.</p>
                     <div class="card-footer">
@@ -76,7 +74,7 @@
 
                 <!-- Товар 4 -->
                 <div class="product-card" data-id="4" data-name="AirPods Max 2" data-price="7500">
-                    <div class="card-icon-box"><i class="fa-solid fa-headphones"></i></div>
+                    <div class="card-icon-box" id="img-4">🎧Max</div>
                     <h3>AirPods Max 2</h3>
                     <p class="card-desc">Люксовые полноразмерные наушники. Металлические чашки и максимальный комфорт.</p>
                     <div class="card-footer">
@@ -91,12 +89,12 @@
     <!-- Преимущества -->
     <section id="benefits" class="benefits">
         <div class="benefit-item">
-            <i class="fa-solid fa-shield-halved"></i>
+            <div style="font-size: 24px; margin-bottom: 10px;">🛡️</div>
             <h3>Гарантия качества</h3>
             <p>14 дней на обмен в случае выявления фабричного брака.</p>
         </div>
         <div class="benefit-item">
-            <i class="fa-solid fa-eye"></i>
+            <div style="font-size: 24px; margin-bottom: 10px;">👀</div>
             <h3>Полная проверка</h3>
             <p>Вскрываем коробку и тестируем звук на вашем телефоне до оплаты.</p>
         </div>
@@ -115,10 +113,10 @@
                 <span id="totalPrice">0 ₽</span>
             </div>
             
-            <!-- Форма отправляет данные ЛОКАЛЬНОМУ скрипту, автозаполнение отключено -->
-            <form id="orderForm" autocomplete="off">
-                <input type="text" id="userName" placeholder="Имя" autocomplete="new-password" required>
-                <input type="tel" id="userPhone" placeholder="Телефон" autocomplete="new-password" required>
+            <!-- Полное отключение автозаполнения браузера -->
+            <form id="orderForm" autocomplete="off" onsubmit="return false;">
+                <input type="text" id="userName" placeholder="Имя" autocomplete="off" name="disabled-name" required>
+                <input type="tel" id="userPhone" placeholder="Телефон" autocomplete="off" name="disabled-phone" required>
                 <button type="submit" class="btn-apple order-btn">Оформить заказ</button>
             </form>
         </div>
