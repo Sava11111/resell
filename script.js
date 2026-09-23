@@ -13,7 +13,7 @@ const closeCart = () => cartModal.classList.remove('active');
 closeModal.addEventListener('click', closeCart);
 window.addEventListener('click', (e) => { if(e.target === cartModal) closeCart(); });
 
-// АНИМАЦИЯ ПОЛЁТА И КОРЗИНА
+// АНИМАЦИЯ ПОЛЁТА В КОРЗИНУ ЧЕРЕЗ ФИКСИРОВАННЫЕ КООРДИНАТЫ
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
         const card = e.target.closest('.product-card');
@@ -21,7 +21,7 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
         const name = card.dataset.name;
         const price = parseInt(card.dataset.price);
 
-        // --- ОПТИМИЗИРОВАННЫЙ ПОЛЁТ СМАЙЛИКА ---
+        // --- БЕЗОТКАЗНЫЙ СКРИПТ ПОЛЁТА ЧЕК-ПОИНТОВ ---
         const iconBox = card.querySelector('.card-icon-box');
         const flyer = document.createElement('div');
         flyer.classList.add('flying-item');
@@ -30,18 +30,18 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
         const boxRect = iconBox.getBoundingClientRect();
         const btnRect = cartBtn.getBoundingClientRect();
         
-        flyer.style.left = `${boxRect.left + 15}px`;
-        flyer.style.top = `${boxRect.top + 15}px`;
+        flyer.style.left = boxRect.left + 15 + 'px';
+        flyer.style.top = boxRect.top + 15 + 'px';
         document.body.appendChild(flyer);
         
         setTimeout(() => {
-            flyer.style.left = `${btnRect.left + 5}px`;
-            flyer.style.top = `${btnRect.top + 5}px`;
+            flyer.style.left = btnRect.left + 10 + 'px';
+            flyer.style.top = btnRect.top + 10 + 'px';
             flyer.style.transform = 'scale(0.1) rotate(180deg)';
             flyer.style.opacity = '0';
-        }, 50);
+        }, 30);
         
-        setTimeout(() => { flyer.remove(); }, 750);
+        setTimeout(() => { flyer.remove(); }, 700);
 
         const existingItem = cart.find(item => item.id === id);
         if(existingItem) {
@@ -74,12 +74,18 @@ function updateCartUI() {
         cartItemsList.appendChild(itemElement);
     });
 
-    totalPriceElement.innerText = `${totalPrice} ₽`;
+    totalPriceElement.innerText = totalPrice + ' ₽';
 }
 
-// НАДЕЖНАЯ JSON ОТПРАВКА С ПРИНУДИТЕЛЬНЫМ СБРОСОМ ПОЛЕЙ
+// ПРОВЕРКА НА ПУСТОТУ И ОТПРАВКА НА PYTHON СЕРВЕР
 orderForm.addEventListener('submit', async function(e) {
     e.preventDefault();
+
+    // ПЛАШКА: ПРОВЕРКА НА ПУСТУЮ КОРЗИНУ
+    if (cart.length === 0) {
+        alert('Ваша корзина пуста! Добавьте наушники перед оформлением заказа.');
+        return;
+    }
 
     const name = document.getElementById('userName').value;
     const phone = document.getElementById('userPhone').value;
@@ -89,7 +95,6 @@ orderForm.addEventListener('submit', async function(e) {
         itemsText += `• ${item.name} (x${item.quantity}) — ${item.price * item.quantity} ₽\n`;
     });
 
-    // Формируем чистый JSON пакет данных
     const payload = {
         name: name,
         phone: phone,
@@ -106,18 +111,18 @@ orderForm.addEventListener('submit', async function(e) {
 
         if (response.ok) {
             closeCart();
-            alert(`Заказ для ${name} успешно отправлен!`);
+            alert('Заказ успешно оформлен! Проверьте ваш Telegram.');
             
-            // Начисто вычищаем корзину и поля, блокируя автозаполнение
+            // Защита от автозаполнения — обнуляем всё до чистых строк
             cart = [];
             updateCartUI();
             orderForm.reset();
             document.getElementById('userName').value = '';
             document.getElementById('userPhone').value = '';
         } else {
-            alert('Ошибка сервера при пересылке.');
+            alert('Ошибка сервера при отправке заказа.');
         }
     } catch (error) {
-        alert('Не удалось связаться с сервером Python! Убедитесь, что запущен скрипт server.py.');
+        alert('Не удалось связаться с сервером Python! Проверьте окно cmd.');
     }
 });
