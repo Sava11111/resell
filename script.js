@@ -1,9 +1,3 @@
-// ==========================================
-// НАСТРОЙКА TELEGRAM БОТА — ДАННЫЕ ВНЕСЕНЫ
-// ==========================================
-const TELEGRAM_BOT_TOKEN = '8609189640:AAGRBaOHTqVUNETHHwdpZ8AfK8SenkUjpl4'; 
-const TELEGRAM_CHAT_ID = '1344498721'; 
-
 let cart = [];
 
 const cartBtn = document.getElementById('cartBtn');
@@ -13,13 +7,14 @@ const cartCount = document.getElementById('cartCount');
 const cartItemsList = document.getElementById('cartItemsList');
 const totalPriceElement = document.getElementById('totalPrice');
 const orderForm = document.getElementById('orderForm');
+const tgMessageText = document.getElementById('tgMessageText');
 
-const closeCart = () => cartModal.classList.remove('active');
+// Открытие и закрытие корзины
 cartBtn.addEventListener('click', () => cartModal.classList.add('active'));
-closeModal.addEventListener('click', closeCart);
-window.addEventListener('click', (e) => { if(e.target === cartModal) closeCart(); });
+closeModal.addEventListener('click', () => cartModal.classList.remove('active'));
+window.addEventListener('click', (e) => { if(e.target === cartModal) cartModal.classList.remove('active'); });
 
-// Добавление в корзину
+// Добавление наушников в корзину
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
         const card = e.target.closest('.product-card');
@@ -71,11 +66,10 @@ function updateCartUI() {
     totalPriceElement.innerText = `${totalPrice} ₽`;
 }
 
-// Отправка заказа через fetch к API Telegram
-orderForm.addEventListener('submit', async function(e) {
-    e.preventDefault(); 
-
+// Формирование текста заказа перед физической отправкой формы
+orderForm.addEventListener('submit', function(e) {
     if (cart.length === 0) {
+        e.preventDefault();
         alert('Ваша корзина пуста.');
         return;
     }
@@ -83,6 +77,7 @@ orderForm.addEventListener('submit', async function(e) {
     const name = document.getElementById('userName').value;
     const phone = document.getElementById('userPhone').value;
 
+    // Генерируем красивый текст чека, который уйдет в форму
     let message = `🔔 <b>Новый заказ с сайта!</b>\n\n`;
     message += `👤 <b>Имя:</b> ${name}\n`;
     message += `📞 <b>Телефон:</b> ${phone}\n\n`;
@@ -94,47 +89,14 @@ orderForm.addEventListener('submit', async function(e) {
     
     message += `\n💰 <b>Итого к оплате:</b> ${totalPriceElement.innerText}`;
 
-    const encodedMessage = encodeURIComponent(message);
-    const tgUrl = `https://telegram.org{TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodedMessage}&parse_mode=HTML`;
+    // Передаем сгенерированный текст в скрытое поле HTML формы
+    tgMessageText.value = message;
 
-    try {
-        const response = await fetch(tgUrl);
-        
-        if (response.ok) {
-            closeCart();
-
-            const notification = document.createElement('div');
-            notification.innerHTML = `
-                <div style="
-                    position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-                    background: #1d1d1f; color: #fff; padding: 14px 28px;
-                    border-radius: 20px; font-weight: 500; font-size: 14px;
-                    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-                    z-index: 9999; display: flex; align-items: center; gap: 10px;
-                    transition: top 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-                ">
-                    <i class="fas fa-check-circle" style="color: #34c759;"></i> Заказ успешно оформлен! Проверьте Telegram.
-                </div>
-            `;
-            
-            const notificationNode = notification.firstElementChild;
-            document.body.appendChild(notificationNode);
-
-            setTimeout(() => { notificationNode.style.top = '24px'; }, 100);
-
-            setTimeout(() => {
-                notificationNode.style.top = '-100px';
-                setTimeout(() => notificationNode.remove(), 500);
-            }, 4000);
-
-            cart = [];
-            updateCartUI();
-            orderForm.reset();
-        } else {
-            alert('Ошибка Telegram API. Убедитесь, что бот запущен кнопкой Старт.');
-        }
-    } catch (error) {
-        console.error('Ошибка сети:', error);
-        alert('Запрос заблокирован защитой браузера. Проверьте отправку через файл test.py!');
-    }
+    // Корзина закроется и очистится сразу после клика
+    setTimeout(() => {
+        cartModal.classList.remove('active');
+        cart = [];
+        updateCartUI();
+        orderForm.reset();
+    }, 100);
 });
