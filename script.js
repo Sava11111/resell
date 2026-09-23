@@ -1,5 +1,8 @@
+// ==========================================
+// НАСТРОЙКА TELEGRAM БОТА — ДАННЫЕ ВНЕСЕНЫ
+// ==========================================
 const TELEGRAM_BOT_TOKEN = '8609189640:AAGRBaOHTqVUNETHHwdpZ8AfK8SenkUjpl4'; 
-const TELEGRAM_CHAT_ID = '1344498721';
+const TELEGRAM_CHAT_ID = '1344498721'; 
 
 let cart = [];
 
@@ -11,13 +14,12 @@ const cartItemsList = document.getElementById('cartItemsList');
 const totalPriceElement = document.getElementById('totalPrice');
 const orderForm = document.getElementById('orderForm');
 
-// Открытие и закрытие корзины
 const closeCart = () => cartModal.classList.remove('active');
 cartBtn.addEventListener('click', () => cartModal.classList.add('active'));
 closeModal.addEventListener('click', closeCart);
 window.addEventListener('click', (e) => { if(e.target === cartModal) closeCart(); });
 
-// ДОБАВЛЕНИЕ НАУШНИКОВ В КОРЗИНУ
+// Добавление в корзину
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
         const card = e.target.closest('.product-card');
@@ -69,7 +71,7 @@ function updateCartUI() {
     totalPriceElement.innerText = `${totalPrice} ₽`;
 }
 
-// ОТПРАВКА ЗАКАЗА БОТОМ С КОНТРОЛЕМ ОШИБОК
+// Отправка заказа ботом
 orderForm.addEventListener('submit', async function(e) {
     e.preventDefault(); 
 
@@ -101,7 +103,6 @@ orderForm.addEventListener('submit', async function(e) {
         if (response.ok) {
             closeCart();
 
-            // Создаем плашку сверху экрана
             const notification = document.createElement('div');
             notification.innerHTML = `
                 <div style="
