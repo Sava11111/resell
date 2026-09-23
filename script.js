@@ -71,7 +71,7 @@ function updateCartUI() {
     totalPriceElement.innerText = `${totalPrice} ₽`;
 }
 
-// Отправка заказа ботом
+// Отправка заказа через fetch к API Telegram
 orderForm.addEventListener('submit', async function(e) {
     e.preventDefault(); 
 
@@ -131,10 +131,10 @@ orderForm.addEventListener('submit', async function(e) {
             updateCartUI();
             orderForm.reset();
         } else {
-            alert('Telegram отклонил запрос. Проверьте TOKEN бота и CHAT_ID в коде!');
+            alert('Ошибка Telegram API. Убедитесь, что бот запущен кнопкой Старт.');
         }
     } catch (error) {
         console.error('Ошибка сети:', error);
-        alert('Браузер заблокировал прямой запрос к Telegram API. Запустите проверочный файл test.py через командную строку!');
+        alert('Запрос заблокирован защитой браузера. Проверьте отправку через файл test.py!');
     }
 });
