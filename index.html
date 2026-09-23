@@ -1,10 +1,11 @@
-html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Store — Наушники оригинального качества</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Подключение векторных иконок FontAwesome -->
     <link rel="stylesheet" href="https://cloudflare.com">
 </head>
 <body>
@@ -18,7 +19,7 @@ html<!DOCTYPE html>
                 <a href="#benefits">О нас</a>
             </nav>
             <div class="cart-icon" id="cartBtn">
-                <i class="fa-solid fa-bag-shopping"></i>
+                <i class="fa-solid fa-cart-shopping"></i>
                 <span id="cartCount">0</span>
             </div>
         </div>
@@ -42,7 +43,7 @@ html<!DOCTYPE html>
             <div class="products-grid">
                 <!-- Товар 1 -->
                 <div class="product-card" data-id="1" data-name="AirPods Pro 2 Premium" data-price="2200">
-                    <div class="card-icon-box"><i class="fa-solid fa-ear-buds"></i> <span class="emoji-icon">🎧</span></div>
+                    <div class="card-icon-box"><i class="fa-solid fa-ear-buds"></i></div>
                     <h3>AirPods Pro 2 Premium</h3>
                     <p class="card-desc">Активное шумоподавление 100%, управление громкостью сенсором, оригинальный микрофон.</p>
                     <div class="card-footer">
@@ -53,7 +54,7 @@ html<!DOCTYPE html>
 
                 <!-- Товар 2 -->
                 <div class="product-card" data-id="2" data-name="AirPods 4 Premium" data-price="2300">
-                    <div class="card-icon-box"><i class="fa-solid fa-music"></i> <span class="emoji-icon">🎧</span></div>
+                    <div class="card-icon-box"><i class="fa-solid fa-music"></i></div>
                     <h3>AirPods 4 Premium</h3>
                     <p class="card-desc">Новейший дизайн, адаптивный эквалайзер, идеальная посадка и чистый звук.</p>
                     <div class="card-footer">
@@ -64,7 +65,7 @@ html<!DOCTYPE html>
 
                 <!-- Товар 3 -->
                 <div class="product-card" data-id="3" data-name="AirPods 3 (ANC)" data-price="2100">
-                    <div class="card-icon-box"><i class="fa-solid fa-bolt"></i> <span class="emoji-icon">🎧</span></div>
+                    <div class="card-icon-box"><i class="fa-solid fa-bolt"></i></div>
                     <h3>AirPods 3 Premium</h3>
                     <p class="card-desc">Классические вкладыши с поддержкой пространственного аудио и функцией ANC.</p>
                     <div class="card-footer">
@@ -75,7 +76,7 @@ html<!DOCTYPE html>
 
                 <!-- Товар 4 -->
                 <div class="product-card" data-id="4" data-name="AirPods Max 2" data-price="7500">
-                    <div class="card-icon-box"><i class="fa-solid fa-headphones"></i> <span class="emoji-icon">🎧</span></div>
+                    <div class="card-icon-box"><i class="fa-solid fa-headphones"></i></div>
                     <h3>AirPods Max 2</h3>
                     <p class="card-desc">Люксовые полноразмерные наушники. Металлические чашки и максимальный комфорт.</p>
                     <div class="card-footer">
@@ -114,14 +115,10 @@ html<!DOCTYPE html>
                 <span id="totalPrice">0 ₽</span>
             </div>
             
-            <!-- ЖЕЛЕЗОБЕТОННЫЙ АДРЕС API СЛИТНО С ТОКЕНОМ -->
-            <form id="orderForm" action="https://telegram.org" method="POST">
-                <input type="hidden" name="chat_id" value="1344498721">
-                <input type="hidden" name="parse_mode" value="HTML">
-                <input type="hidden" name="text" id="tgMessageText">
-                
-                <input type="text" id="userName" placeholder="Имя" required>
-                <input type="tel" id="userPhone" placeholder="Телефон" required>
+            <!-- Форма отправляет данные ЛОКАЛЬНОМУ скрипту, автозаполнение отключено -->
+            <form id="orderForm" autocomplete="off">
+                <input type="text" id="userName" placeholder="Имя" autocomplete="new-password" required>
+                <input type="tel" id="userPhone" placeholder="Телефон" autocomplete="new-password" required>
                 <button type="submit" class="btn-apple order-btn">Оформить заказ</button>
             </form>
         </div>
@@ -130,4 +127,3 @@ html<!DOCTYPE html>
     <script src="script.js"></script>
 </body>
 </html>
-
